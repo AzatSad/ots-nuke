@@ -4,6 +4,10 @@ MAKEFLAGS += --silent
 run:
 	poetry run python -m ots_nuke
 
+.PHONY: down
+down:
+	pkill -f "uvicorn" || true
+
 .PHONY: lint
 lint:
 	poetry run ruff format ./ \
@@ -25,6 +29,13 @@ tests:
 cov:
 	poetry run pytest --cov=ots_nuke ./tests
 
+.PHONY: cov-html
+cov-html:
+	poetry run pytest --cov=ots_nuke ./tests --cov-report=html
+
 .PHONY: all
 all:
 	make pre-commit && make tests && echo "All checks passed!"
+
+pc: pre-commit
+t: tests

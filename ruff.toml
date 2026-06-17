@@ -55,6 +55,15 @@ ignore = [
     "PLR2004",
     "FBT001",
 ]
+"ots_nuke/__version__.py" = [
+    "T201",
+]
+"ots_nuke/lifespan.py" = [
+    "ARG001",
+]
+"ots_nuke/settings/server.py" = [
+    "S104",
+]
 
 [format]
 skip-magic-trailing-comma = false

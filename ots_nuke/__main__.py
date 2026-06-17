@@ -1,9 +1,10 @@
 import uvicorn
+
 from ots_nuke.settings.settings import settings
 
 
 def main() -> None:
-    """Application entry point"""
+    """Application entry point."""
     uvicorn.run(
         'ots_nuke.application:get_app',
         host=settings.host,
@@ -14,6 +15,7 @@ def main() -> None:
         factory=True,
         log_config=None,
     )
+
 
 if __name__ == '__main__':
     main()
