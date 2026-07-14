@@ -305,9 +305,9 @@
                     else if (theme === 'garage') initParticles(45, box, 'sparks');
                     lastTheme = theme;
                 }if (theme === 'hacker') {
-                    ctx.fillStyle = 'rgba(10, 10, 10, 0.08)';
+                    ctx.fillStyle = 'rgba(10, 10, 10, 0.15)';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.fillStyle = '#33ff33';
+                    ctx.fillStyle = 'rgba(51, 255, 51, 0.20)';
                     ctx.font = '15px monospace';
                     for (var i = 0; i < matrixDrops.length; i++) {
                         var text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
