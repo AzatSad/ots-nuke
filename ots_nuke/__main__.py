@@ -1,6 +1,6 @@
 import uvicorn
 
-from gunicorn_runner import GunicornApplication
+from ots_nuke.gunicorn_runner import GunicornApplication
 from ots_nuke.settings.settings import settings
 
 
