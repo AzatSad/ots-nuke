@@ -37,7 +37,7 @@ body {
 .container {
     width: 100%;
     max-width: 600px;
-    padding: 40px 20px;
+    padding: 60px 20px 40px;
     position: relative;
     z-index: 1;
 }
@@ -113,6 +113,11 @@ textarea:focus {
     text-align: center;
     text-decoration: none;
     transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.btn:first-of-type {
+    margin-top: 0;
 }
 
 .btn:hover {
@@ -124,7 +129,6 @@ textarea:focus {
 .btn-secondary {
     border-color: var(--border-secondary);
     color: var(--text-secondary);
-    margin-top: 10px;
 }
 
 .btn-secondary:hover {
@@ -172,7 +176,8 @@ textarea:focus {
 .warning {
     color: var(--text-warning);
     font-size: 0.8rem;
-    margin-top: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     text-align: center;
 }
 
@@ -190,19 +195,18 @@ footer {
     z-index: 100;
 }.theme-selector select {
     background-color: var(--bg-secondary);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-primary);
     border-radius: 4px;
-    padding: 5px 10px;
+    padding: 8px 14px;
     font-family: var(--font-family);
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     cursor: pointer;
     outline: none;
 }
 
 .theme-selector select:hover {
-    border-color: var(--border-primary);
-    color: var(--text-primary);
+    box-shadow: 0 0 10px var(--glow-color);
 }
 
 .bg-animation {

@@ -7,6 +7,14 @@
     <meta property="og:title" content="OTS-NUKE">
     <meta property="og:description" content="Сервис одноразовых секретов. Отправь секрет — он будет уничтожен после прочтения.">
     <meta property="og:type" content="website">
+    <script>
+        var t = localStorage.getItem('ots-theme');
+        var urlTheme = new URLSearchParams(window.location.search).get('theme');
+        if (urlTheme) { t = urlTheme; }
+        if (t && t !== 'hacker') {
+            document.documentElement.className = 'theme-' + t;
+        }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Dela+Gothic+One&family=Creepster&family=Russo+One&display=swap" rel="stylesheet">
@@ -86,7 +94,8 @@
             },
             hollow: {
                 subtitle: '// тени скрывают правду',
-                footer: '> пустой следит_',btnCreate: '> скрыть в тени_',
+                footer: '> пустой следит_',
+                btnCreate: '> скрыть в тени_',
                 btnReveal: '> снять маску_',
                 btnCopy: '> скопировать путь_',
                 btnCopied: '> путь скопирован!',
@@ -128,8 +137,10 @@
         };
 
         function setTheme(theme) {
+            document.documentElement.className = '';
             document.body.className = '';
             if (theme !== 'hacker') {
+                document.documentElement.className = 'theme-' + theme;
                 document.body.className = 'theme-' + theme;
             }
             localStorage.setItem('ots-theme', theme);
@@ -166,9 +177,7 @@
             if (el) el.textContent = texts.msgCreated;
 
             el = document.querySelector('[data-text="msgDecrypted"]');
-            if (el) el.textContent = texts.msgDecrypted;
-
-            el = document.querySelector('[data-text="msgReady"]');
+            if (el) el.textContent = texts.msgDecrypted;el = document.querySelector('[data-text="msgReady"]');
             if (el) el.textContent = texts.msgReady;
 
             el = document.querySelector('[data-text="msgError"]');
@@ -179,6 +188,7 @@
 
             el = document.querySelector('[data-text="msgWillDestroy"]');
             if (el) el.textContent = texts.msgWillDestroy;
+
             el = document.querySelector('[data-text="msgWarn"]');
             if (el) el.textContent = texts.msgWarn;
 
@@ -220,7 +230,8 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            var saved = localStorage.getItem('ots-theme') || 'hacker';
+            var urlTheme = new URLSearchParams(window.location.search).get('theme');
+            var saved = urlTheme  localStorage.getItem('ots-theme')  'hacker';
             setTheme(saved);
 
             var logo = document.getElementById('logo');

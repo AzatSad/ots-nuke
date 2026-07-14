@@ -15,12 +15,20 @@
 <a href="/" class="btn btn-secondary" data-text="btnNew">&gt; создать ещё_</a>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var theme = localStorage.getItem('ots-theme')  'hacker';
+        var input = document.getElementById('secret-url');
+        if (input && theme !== 'hacker') {
+            input.value = input.value + '?theme=' + theme;
+        }
+    });
+
     function copyLink() {
         var input = document.getElementById('secret-url');
         input.select();
         document.execCommand('copy');
         var btn = document.querySelector('[data-text="btnCopy"]');
-        var theme = localStorage.getItem('ots-theme') || 'hacker';
+        var theme = localStorage.getItem('ots-theme')  'hacker';
         btn.textContent = themeTexts[theme].btnCopied;
         setTimeout(function() {
             btn.textContent = themeTexts[theme].btnCopy;
