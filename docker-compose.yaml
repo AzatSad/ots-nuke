@@ -1,0 +1,35 @@
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: ots-nuke-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+  postgres:
+    image: postgres:16.3
+    container_name: ots-nuke-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ots_nuke
+      POSTGRES_PASSWORD: ots_nuke
+      POSTGRES_DB: ots_nuke
+    healthcheck:
+      test: pg_isready -U ots_nuke
+      interval: 2s
+      timeout: 3s
+      retries: 40
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -2,11 +2,12 @@ from typing import final
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from ots_nuke.settings.db import DBSettings
 from ots_nuke.settings.server import ServerSettings
 
 
 @final
-class Settings(ServerSettings, BaseSettings):
+class Settings(ServerSettings, DBSettings, BaseSettings):
     """The main settings class.
 
     Loads configuration from environment variavels

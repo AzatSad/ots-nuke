@@ -1,4 +1,26 @@
+# === Configuration ===
 MAKEFLAGS += --silent
+
+.PHONY: make
+make:
+	cat -n ./Makefile
+
+# === Build ===
+.PHONY: dc-build
+dc-build:
+	docker compose up --build
+
+.PHONY: dc-up
+dc-up:
+	docker compose up
+
+.PHONY: dc-up-d
+dc-up-d:
+	docker compose up -d
+
+.PHONY: dc-down
+dc-down:
+	docker compose down
 
 .PHONY: run
 run:
@@ -8,6 +30,7 @@ run:
 down:
 	pkill -f "uvicorn" || true
 
+# === Lint ===
 .PHONY: lint
 lint:
 	poetry run ruff format ./ \
@@ -21,6 +44,7 @@ mypy:
 pre-commit:
 	make lint && make mypy
 
+# === Tests ===
 .PHONY: tests
 tests:
 	poetry run pytest ./tests/
