@@ -13,7 +13,7 @@ body.theme-akatsuki {
     --border-primary: #ff2d2d;
     --border-secondary: #8b0000;
     --glow-color: rgba(255, 45, 45, 0.15);
-    --glow-text: #ff2d2d;
+    --glow-text: rgba(255; 45, 45, 0.5);
     --glow-hover: rgba(255, 45, 45, 0.4);
     --btn-hover-bg: #ff2d2d;
     --btn-hover-text: #0d0000;
@@ -77,6 +77,7 @@ body.theme-hollow {
     --btn-hover-text: #05050a;
     --btn-secondary-hover-bg: #483d8b;
     --font-family: 'Creepster', 'Georgia', serif;
+    font-size: 1.1rem;
 }
 
 .theme-hollow .bg-animation {
@@ -118,20 +119,20 @@ body.theme-hollow {
    ============================================ */
 
 body.theme-garage {
-    --bg-primary: #111114;
-    --bg-secondary: #1a1a1f;
-    --text-primary: #ffaa00;
-    --text-secondary: #886600;
+    --bg-primary: #131316;
+    --bg-secondary: #1c1c22;
+    --text-primary: #ff8c00;
+    --text-secondary: #cc7000;
     --text-error: #ff4444;
     --text-warning: #ff6600;
-    --border-primary: #ffaa00;
-    --border-secondary: #886600;
-    --glow-color: rgba(255, 170, 0, 0.1);
-    --glow-text: #ffaa00;
-    --glow-hover: rgba(255, 170, 0, 0.4);
-    --btn-hover-bg: #ffaa00;
-    --btn-hover-text: #111114;
-    --btn-secondary-hover-bg: #886600;
+    --border-primary: #ff8c00;
+    --border-secondary: #995300;
+    --glow-color: rgba(255, 140, 0, 0.08);
+    --glow-text: rgba(255, 140, 0, 0.4);
+    --glow-hover: rgba(255, 140, 0, 0.3);
+    --btn-hover-bg: #ff8c00;
+    --btn-hover-text: #131316;
+    --btn-secondary-hover-bg: #995300;
     --font-family: 'Russo One', 'Impact', sans-serif;
 }.theme-garage .bg-animation {
     background: repeating-linear-gradient(

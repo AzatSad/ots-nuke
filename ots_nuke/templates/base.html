@@ -23,6 +23,7 @@
 </head>
 <body>
     <div class="bg-animation"></div>
+    <canvas id="matrix-canvas"></canvas>
 
     <div class="theme-selector">
         <select id="theme-select" onchange="setTheme(this.value)">
@@ -231,11 +232,49 @@
             }, stepTime);
         }
 
+        function initMatrix() {
+            var canvas = document.getElementById('matrix-canvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            var columns = Math.floor(canvas.width / 20);
+            var drops = [];
+            var chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF';
+            for (var i = 0; i < columns; i++) {
+                drops[i] = Math.floor(Math.random() * -canvas.height / 20);
+            }
+            function draw() {
+                ctx.fillStyle = 'rgba(10, 10, 10, 0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                var theme = localStorage.getItem('ots-theme') || 'hacker';
+                if (theme !== 'hacker') {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    return;
+                }
+                ctx.fillStyle = '#33ff33';
+                ctx.font = '15px monospace';
+                for (var i = 0; i < drops.length; i++) {
+                    var text = chars[Math.floor(Math.random() * chars.length)];
+                    ctx.fillText(text, i * 20, drops[i] * 20);
+                    if (drops[i] * 20 > canvas.height && Math.random() > 0.98) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+            setInterval(draw, 80);
+            window.addEventListener('resize', function() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
         document.addEventListener('DOMContentLoaded', function() {
             var urlTheme = new URLSearchParams(window.location.search).get('theme');
             var saved = urlTheme || localStorage.getItem('ots-theme') ||  'hacker';
             setTheme(saved);
 
+            initMatrix();
             var logo = document.getElementById('logo');
             if (logo) {
                 scrambleText(logo, 'OTS-NUKE', 800);
