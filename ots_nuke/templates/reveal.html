@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}OTS-NUKE // прочитать секрет{% endblock %}
+
+{% block content %}
+<p class="message message-success" data-text="msgReady">&gt; секрет готов к расшифровке_</p>
+<p class="warning" data-text="msgWillDestroy">&gt; после нажатия секрет будет уничтожен навсегда</p>
+<form method="post" action="/s/{{ secret_key }}">
+    <button type="submit" class="btn" data-text="btnReveal">&gt; расшифровать секрет_</button>
+</form>
+{% endblock %}

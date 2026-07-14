@@ -1,0 +1,170 @@
+/* ============================================
+   THEME: AKATSUKI (Naruto)
+   Красно-чёрная палитра, облака Акацки
+   ============================================ */
+
+body.theme-akatsuki {
+    --bg-primary: #0d0000;
+    --bg-secondary: #1a0505;
+    --text-primary: #ff2d2d;
+    --text-secondary: #8b0000;
+    --text-error: #ff0000;
+    --text-warning: #ff6600;
+    --border-primary: #ff2d2d;
+    --border-secondary: #8b0000;
+    --glow-color: rgba(255, 45, 45, 0.15);
+    --glow-text: #ff2d2d;
+    --glow-hover: rgba(255, 45, 45, 0.4);
+    --btn-hover-bg: #ff2d2d;
+    --btn-hover-text: #0d0000;
+    --btn-secondary-hover-bg: #8b0000;
+    --font-family: 'Dela Gothic One', 'Arial Black', sans-serif;
+}
+
+.theme-akatsuki .bg-animation {
+    background: radial-gradient(ellipse at 20% 50%, rgba(139, 0, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(139, 0, 0, 0.15) 0%, transparent 50%);
+}
+
+.theme-akatsuki .bg-animation::before,
+.theme-akatsuki .bg-animation::after {
+    content: '';
+    position: absolute;
+    width: 120px;
+    height: 80px;
+    background: radial-gradient(ellipse, rgba(255, 45, 45, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float-clouds 8s ease-in-out infinite;
+}
+
+.theme-akatsuki .bg-animation::before {
+    top: 20%;
+    left: -120px;
+    animation-delay: 0s;
+}
+
+.theme-akatsuki .bg-animation::after {
+    top: 60%;
+    left: -120px;
+    animation-delay: 4s;
+}
+
+@keyframes float-clouds {
+    0% { transform: translateX(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateX(calc(100vw + 240px)); opacity: 0; }
+}
+
+/* ============================================
+   THEME: HOLLOW (Bleach)
+   Чёрно-белая палитра, фиолетовый туман
+   ============================================ */
+
+body.theme-hollow {
+    --bg-primary: #05050a;
+    --bg-secondary: #0a0a14;
+    --text-primary: #e0e0ff;
+    --text-secondary: #7b68ee;
+    --text-error: #ff4444;
+    --text-warning: #9370db;
+    --border-primary: #7b68ee;
+    --border-secondary: #483d8b;
+    --glow-color: rgba(123, 104, 238, 0.15);
+    --glow-text: #7b68ee;
+    --glow-hover: rgba(123, 104, 238, 0.4);
+    --btn-hover-bg: #7b68ee;
+    --btn-hover-text: #05050a;
+    --btn-secondary-hover-bg: #483d8b;
+    --font-family: 'Creepster', 'Georgia', serif;
+}
+
+.theme-hollow .bg-animation {
+    background: radial-gradient(ellipse at 50% 50%, rgba(123, 104, 238, 0.08) 0%, transparent 70%);
+    animation: pulse-fog 4s ease-in-out infinite;
+}
+
+.theme-hollow .bg-animation::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 70%, rgba(75, 0, 130, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(123, 104, 238, 0.08) 0%, transparent 50%);
+    animation: pulse-fog 6s ease-in-out infinite reverse;
+}
+
+@keyframes pulse-fog {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* ============================================
+   THEME: GARAGE (Automotive)
+   Тёмно-серый, жёлто-оранжевые акценты
+   ============================================ */
+
+body.theme-garage {
+    --bg-primary: #111114;
+    --bg-secondary: #1a1a1f;
+    --text-primary: #ffaa00;
+    --text-secondary: #886600;
+    --text-error: #ff4444;
+    --text-warning: #ff6600;
+    --border-primary: #ffaa00;
+    --border-secondary: #886600;
+    --glow-color: rgba(255, 170, 0, 0.1);
+    --glow-text: #ffaa00;
+    --glow-hover: rgba(255, 170, 0, 0.4);
+    --btn-hover-bg: #ffaa00;
+    --btn-hover-text: #111114;
+    --btn-secondary-hover-bg: #886600;
+    --font-family: 'Russo One', 'Impact', sans-serif;
+}
+
+.theme-garage .bg-animation {
+    background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 58px,
+        rgba(255, 170, 0, 0.03) 58px,
+        rgba(255, 170, 0, 0.03) 60px
+    );
+}.theme-garage .bg-animation::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        #ffaa00 20%,
+        #ff6600 50%,
+        #ffaa00 80%,
+        transparent 100%);
+    animation: spark-line 3s linear infinite;
+}
+
+.theme-garage .bg-animation::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 3px,
+        rgba(255, 255, 255, 0.01) 3px,
+        rgba(255, 255, 255, 0.01) 4px
+    );
+}
+
+@keyframes spark-line {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}

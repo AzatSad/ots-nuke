@@ -5,10 +5,10 @@
 {% block content %}
 <form method="post" action="/">
     <div class="form-group">
-        <label>&gt; введите секретное сообщение:</label>
+        <label data-text="labelEnter">&gt; введите секретное сообщение:</label>
         <textarea name="secret_text" placeholder="введите ваш секрет здесь..." required></textarea>
     </div>
-    <button type="submit" class="btn">&gt; зашифровать и создать ссылку_</button>
+    <button type="submit" class="btn" data-text="btnCreate">&gt; зашифровать и создать ссылку_</button>
 </form>
-<p class="warning">&gt; секрет будет уничтожен после первого прочтения</p>
+<p class="warning" data-text="msgWarn">&gt; секрет будет уничтожен после первого прочтения</p>
 {% endblock %}

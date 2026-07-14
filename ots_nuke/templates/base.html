@@ -4,9 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}OTS-NUKE{% endblock %}</title>
+    <meta property="og:title" content="OTS-NUKE">
+    <meta property="og:description" content="Сервис одноразовых секретов. Отправь секрет — он будет уничтожен после прочтения.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Dela+Gothic+One&family=Creepster&family=Russo+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/themes.css">
 </head>
 <body>
+    <div class="bg-animation"></div>
+
+    <div class="theme-selector">
+        <select id="theme-select" onchange="setTheme(this.value)">
+            <option value="hacker">Hacker</option>
+            <option value="akatsuki">Akatsuki</option>
+            <option value="hollow">Hollow</option>
+            <option value="garage">Garage</option>
+        </select>
+    </div>
+
     <div class="container">
         <header>
             <a href="/" class="logo" id="logo">OTS-NUKE</a>
@@ -23,15 +41,169 @@
     </div>
 
     <script>
-        function scrambleText(element, finalText, duration) {
-            const chars = '▓░▒█▄▀╔╗╚╝║═@#$%&*';
-            const steps = 15;
-            const stepTime = duration / steps;
-            let step = 0;
+        var themeTexts = {
+            hacker: {
+                subtitle: '// сервис одноразовых секретов',
+                footer: '> система активна_',
+                btnCreate: '> зашифровать и создать ссылку_',
+                btnReveal: '> расшифровать секрет_',
+                btnCopy: '> скопировать ссылку_',
+                btnCopied: '> ссылка скопирована!',
+                btnNew: '> создать ещё_',
+                btnNewSecret: '> создать новый секрет_',
+                msgCreated: '> секрет успешно создан_',
+                msgDecrypted: '> секрет расшифрован_',
+                msgReady: '> секрет готов к расшифровке_',
+                msgError: '> ОШИБКА: секрет не найден_',
+                msgDestroyed: '> этот секрет уничтожен навсегда',
+                msgWillDestroy: '> после нажатия секрет будет уничтожен навсегда',
+                msgWarn: '> секрет будет уничтожен после первого прочтения',
+                msgNotFound: '> секрет не существует или уже был прочитан',
+                labelEnter: '> введите секретное сообщение:',
+                labelLink: '> отправьте эту ссылку получателю:',
+                placeholder: 'введите ваш секрет здесь...'
+            },
+            akatsuki: {
+                subtitle: '// запретная техника секретов',
+                footer: '> акацки наблюдает_',
+                btnCreate: '> запечатать секрет_',
+                btnReveal: '> сорвать печать_',
+                btnCopy: '> скопировать свиток_',
+                btnCopied: '> свиток скопирован!',
+                btnNew: '> новый свиток_',
+                btnNewSecret: '> создать новый свиток_',
+                msgCreated: '> свиток запечатан_',
+                msgDecrypted: '> печать сорвана_',
+                msgReady: '> свиток готов к вскрытию_',
+                msgError: '> ОШИБКА: свиток уничтожен_',
+                msgDestroyed: '> этот свиток сгорел навсегда',
+                msgWillDestroy: '> после вскрытия свиток будет уничтожен',
+                msgWarn: '> свиток сгорит после первого прочтения',
+                msgNotFound: '> свиток не существует или уже был прочитан',
+                labelEnter: '> напишите секретное послание:',
+                labelLink: '> отправьте свиток получателю:',
+                placeholder: 'напишите ваше послание здесь...'
+            },
+            hollow: {
+                subtitle: '// тени скрывают правду',
+                footer: '> пустой следит_',btnCreate: '> скрыть в тени_',
+                btnReveal: '> снять маску_',
+                btnCopy: '> скопировать путь_',
+                btnCopied: '> путь скопирован!',
+                btnNew: '> новая тень_',
+                btnNewSecret: '> создать новую тень_',
+                msgCreated: '> тень скрыта_',
+                msgDecrypted: '> маска снята_',
+                msgReady: '> тень готова к раскрытию_',
+                msgError: '> ОШИБКА: тень рассеялась_',
+                msgDestroyed: '> эта тень исчезла навсегда',
+                msgWillDestroy: '> после раскрытия тень исчезнет навсегда',
+                msgWarn: '> тень рассеется после первого взгляда',
+                msgNotFound: '> тень не существует или уже рассеялась',
+                labelEnter: '> вложите послание в тень:',
+                labelLink: '> отправьте путь к тени:',
+                placeholder: 'вложите ваше послание здесь...'
+            },
+            garage: {
+                subtitle: '// секреты под замком',
+                footer: '> гараж на охране_',
+                btnCreate: '> запереть в гараже_',
+                btnReveal: '> открыть гараж_',
+                btnCopy: '> скопировать ключ_',
+                btnCopied: '> ключ скопирован!',
+                btnNew: '> новый тайник_',
+                btnNewSecret: '> создать новый тайник_',
+                msgCreated: '> тайник закрыт_',
+                msgDecrypted: '> тайник вскрыт_',
+                msgReady: '> тайник готов к вскрытию_',
+                msgError: '> ОШИБКА: тайник пуст_',
+                msgDestroyed: '> этот тайник уничтожен навсегда',
+                msgWillDestroy: '> после вскрытия тайник будет уничтожен',
+                msgWarn: '> тайник будет уничтожен после первого вскрытия',
+                msgNotFound: '> тайник не существует или уже был вскрыт',
+                labelEnter: '> спрячьте секрет в тайник:',
+                labelLink: '> отправьте ключ получателю:',
+                placeholder: 'спрячьте ваш секрет здесь...'
+            }
+        };
 
-            const interval = setInterval(function() {
-                let result = '';
-                for (let i = 0; i < finalText.length; i++) {
+        function setTheme(theme) {
+            document.body.className = '';
+            if (theme !== 'hacker') {
+                document.body.className = 'theme-' + theme;
+            }
+            localStorage.setItem('ots-theme', theme);
+            document.getElementById('theme-select').value = theme;
+            applyTexts(theme);
+        }
+
+        function applyTexts(theme) {
+            var texts = themeTexts[theme];
+            var el;
+
+            el = document.querySelector('.subtitle');
+            if (el) el.textContent = texts.subtitle;
+
+            el = document.querySelector('footer p');
+            if (el) el.textContent = texts.footer;
+
+            el = document.querySelector('[data-text="btnCreate"]');
+            if (el) el.textContent = texts.btnCreate;
+
+            el = document.querySelector('[data-text="btnReveal"]');
+            if (el) el.textContent = texts.btnReveal;
+
+            el = document.querySelector('[data-text="btnCopy"]');
+            if (el) el.textContent = texts.btnCopy;
+
+            el = document.querySelector('[data-text="btnNew"]');
+            if (el) el.textContent = texts.btnNew;
+
+            el = document.querySelector('[data-text="btnNewSecret"]');
+            if (el) el.textContent = texts.btnNewSecret;
+
+            el = document.querySelector('[data-text="msgCreated"]');
+            if (el) el.textContent = texts.msgCreated;
+
+            el = document.querySelector('[data-text="msgDecrypted"]');
+            if (el) el.textContent = texts.msgDecrypted;
+
+            el = document.querySelector('[data-text="msgReady"]');
+            if (el) el.textContent = texts.msgReady;
+
+            el = document.querySelector('[data-text="msgError"]');
+            if (el) el.textContent = texts.msgError;
+
+            el = document.querySelector('[data-text="msgDestroyed"]');
+            if (el) el.textContent = texts.msgDestroyed;
+
+            el = document.querySelector('[data-text="msgWillDestroy"]');
+            if (el) el.textContent = texts.msgWillDestroy;
+            el = document.querySelector('[data-text="msgWarn"]');
+            if (el) el.textContent = texts.msgWarn;
+
+            el = document.querySelector('[data-text="msgNotFound"]');
+            if (el) el.textContent = texts.msgNotFound;
+
+            el = document.querySelector('[data-text="labelEnter"]');
+            if (el) el.textContent = texts.labelEnter;
+
+            el = document.querySelector('[data-text="labelLink"]');
+            if (el) el.textContent = texts.labelLink;
+
+            el = document.querySelector('textarea');
+            if (el) el.placeholder = texts.placeholder;
+        }
+
+        function scrambleText(element, finalText, duration) {
+            var chars = '▓░▒█▄▀╔╗╚╝║═@#$%&*';
+            var steps = 15;
+            var stepTime = duration / steps;
+            var step = 0;
+
+            var interval = setInterval(function() {
+                var result = '';
+                for (var i = 0; i < finalText.length; i++) {
                     if (i < (finalText.length * step / steps)) {
                         result += finalText[i];
                     } else {
@@ -48,7 +220,10 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            const logo = document.getElementById('logo');
+            var saved = localStorage.getItem('ots-theme') || 'hacker';
+            setTheme(saved);
+
+            var logo = document.getElementById('logo');
             if (logo) {
                 scrambleText(logo, 'OTS-NUKE', 800);
             }

@@ -3,7 +3,7 @@
 {% block title %}OTS-NUKE // не найден{% endblock %}
 
 {% block content %}
-<p class="message message-error">&gt; ОШИБКА: секрет не найден_</p>
-<p class="warning">&gt; секрет не существует или уже был прочитан</p>
-<a href="/" class="btn">&gt; создать новый секрет_</a>
+<p class="message message-error" data-text="msgError">&gt; ОШИБКА: секрет не найден_</p>
+<p class="warning" data-text="msgNotFound">&gt; секрет не существует или уже был прочитан</p>
+<a href="/" class="btn" data-text="btnNewSecret">&gt; создать новый секрет_</a>
 {% endblock %}

@@ -1,3 +1,21 @@
+:root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #111111;
+    --text-primary: #33ff33;
+    --text-secondary: #1a8c1a;
+    --text-error: #ff3333;
+    --text-warning: #cccc33;
+    --border-primary: #33ff33;
+    --border-secondary: #1a8c1a;
+    --glow-color: rgba(51, 255, 51, 0.1);
+    --glow-text: #33ff33;
+    --glow-hover: rgba(51, 255, 51, 0.4);
+    --btn-hover-bg: #33ff33;
+    --btn-hover-text: #0a0a0a;
+    --btn-secondary-hover-bg: #1a8c1a;
+    --font-family: 'Share Tech Mono', 'Courier New', monospace;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -5,19 +23,23 @@
 }
 
 body {
-    background-color: #0a0a0a;
-    color: #33ff33;
-    font-family: 'Courier New', monospace;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-family);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    overflow-x: hidden;
 }
 
 .container {
     width: 100%;
     max-width: 600px;
     padding: 40px 20px;
+    position: relative;
+    z-index: 1;
 }
 
 header {
@@ -28,23 +50,23 @@ header {
 .logo {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #33ff33;
+    color: var(--text-primary);
     text-decoration: none;
-    text-shadow: 0 0 10px #33ff33;
+    text-shadow: 0 0 10px var(--glow-text);
 }
 
 .subtitle {
-    color: #1a8c1a;
+    color: var(--text-secondary);
     margin-top: 8px;
     font-size: 0.9rem;
 }
 
 main {
-    background-color: #111111;
-    border: 1px solid #33ff33;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
     border-radius: 4px;
     padding: 30px;
-    box-shadow: 0 0 20px rgba(51, 255, 51, 0.1);
+    box-shadow: 0 0 20px var(--glow-color);
 }
 
 .form-group {
@@ -54,27 +76,27 @@ main {
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    color: #1a8c1a;
+    color: var(--text-secondary);
     font-size: 0.85rem;
 }
 
 textarea {
     width: 100%;
     min-height: 120px;
-    background-color: #0a0a0a;
-    color: #33ff33;
-    border: 1px solid #1a8c1a;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-secondary);
     border-radius: 4px;
     padding: 12px;
-    font-family: 'Courier New', monospace;
+    font-family: var(--font-family);
     font-size: 1rem;
     resize: vertical;
 }
 
 textarea:focus {
     outline: none;
-    border-color: #33ff33;
-    box-shadow: 0 0 5px rgba(51, 255, 51, 0.3);
+    border-color: var(--border-primary);
+    box-shadow: 0 0 5px var(--glow-color);
 }
 
 .btn {
@@ -82,10 +104,10 @@ textarea:focus {
     width: 100%;
     padding: 12px 24px;
     background-color: transparent;
-    color: #33ff33;
-    border: 1px solid #33ff33;
+    color: var(--text-primary);
+    border: 1px solid var(--border-primary);
     border-radius: 4px;
-    font-family: 'Courier New', monospace;
+    font-family: var(--font-family);
     font-size: 1rem;
     cursor: pointer;
     text-align: center;
@@ -94,42 +116,42 @@ textarea:focus {
 }
 
 .btn:hover {
-    background-color: #33ff33;
-    color: #0a0a0a;
-    box-shadow: 0 0 15px rgba(51, 255, 51, 0.4);
+    background-color: var(--btn-hover-bg);
+    color: var(--btn-hover-text);
+    box-shadow: 0 0 15px var(--glow-hover);
 }
 
 .btn-secondary {
-    border-color: #1a8c1a;
-    color: #1a8c1a;
+    border-color: var(--border-secondary);
+    color: var(--text-secondary);
     margin-top: 10px;
 }
 
 .btn-secondary:hover {
-    background-color: #1a8c1a;
-    color: #0a0a0a;
+    background-color: var(--btn-secondary-hover-bg);
+    color: var(--btn-hover-text);
 }
 
 .secret-link {
-    background-color: #0a0a0a;
-    border: 1px solid #1a8c1a;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-secondary);
     border-radius: 4px;
     padding: 12px;
     margin: 15px 0;
     word-break: break-all;
-    color: #33ff33;
+    color: var(--text-primary);
     font-size: 0.9rem;
 }
 
 .secret-text {
-    background-color: #0a0a0a;
-    border: 1px solid #33ff33;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
     border-radius: 4px;
     padding: 15px;
     margin: 15px 0;
     white-space: pre-wrap;
     word-break: break-word;
-    color: #33ff33;
+    color: var(--text-primary);
     line-height: 1.5;
 }
 
@@ -140,15 +162,15 @@ textarea:focus {
 }
 
 .message-success {
-    color: #33ff33;
+    color: var(--text-primary);
 }
 
 .message-error {
-    color: #ff3333;
+    color: var(--text-error);
 }
 
 .warning {
-    color: #cccc33;
+    color: var(--text-warning);
     font-size: 0.8rem;
     margin-top: 10px;
     text-align: center;
@@ -157,6 +179,39 @@ textarea:focus {
 footer {
     text-align: center;
     margin-top: 40px;
-    color: #1a8c1a;
+    color: var(--text-secondary);
     font-size: 0.75rem;
+}
+
+.theme-selector {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 100;
+}.theme-selector select {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-secondary);
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-family: var(--font-family);
+    font-size: 0.75rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.theme-selector select:hover {
+    border-color: var(--border-primary);
+    color: var(--text-primary);
+}
+
+.bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
 }

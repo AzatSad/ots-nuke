@@ -44,12 +44,34 @@ async def created(request: Request, secret_key: str) -> HTMLResponse:
 
 
 @router.get('/s/{secret_key}', response_class=HTMLResponse)
+async def reveal_page(
+    request: Request,
+    dao: SecretDAODepends,
+    secret_key: str,
+) -> HTMLResponse:
+    """Show reveal page without reading the secret."""
+    service = SecretService(dao=dao)
+    secret_text = await service.get_without_delete(secret_key=secret_key)
+    if secret_text is None:
+        return templates.TemplateResponse(
+            request,
+            'not_found.html',
+            status_code=status.HTTP_404_NOT_FOUND,
+        )
+    return templates.TemplateResponse(
+        request,
+        'reveal.html',
+        {'secret_key': secret_key},
+    )
+
+
+@router.post('/s/{secret_key}', response_class=HTMLResponse)
 async def get_secret(
     request: Request,
     dao: SecretDAODepends,
     secret_key: str,
 ) -> HTMLResponse:
-    """Get and display a one-time secret."""
+    """Get and display a one-time secret, then delete it."""
     service = SecretService(dao=dao)
     secret_text = await service.get(secret_key=secret_key)
     if secret_text is None:

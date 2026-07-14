@@ -25,3 +25,14 @@ class SecretService:
             return None
         await self._dao.delete(secret=secret)
         return secret.secret_text
+
+    async def get_without_delete(self, secret_key: str) -> str | None:
+        """Check if secret exists without deleting it."""
+        try:
+            secret_id = uuid.UUID(secret_key)
+        except ValueError:
+            return None
+        secret = await self._dao.get_by_id(secret_id=secret_id)
+        if secret is None:
+            return None
+        return secret.secret_text

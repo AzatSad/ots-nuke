@@ -3,26 +3,27 @@
 {% block title %}OTS-NUKE // секрет создан{% endblock %}
 
 {% block content %}
-<p class="message message-success">&gt; секрет успешно создан_</p>
+<p class="message message-success" data-text="msgCreated">&gt; секрет успешно создан_</p>
 <div class="form-group">
-    <label>&gt; отправьте эту ссылку получателю:</label>
+    <label data-text="labelLink">&gt; отправьте эту ссылку получателю:</label>
     <div class="secret-link">
         <input type="text" id="secret-url" value="{{ secret_url }}" readonly
-               style="width:100%;background:transparent;border:none;color:#33ff33;font-family:'Courier New',monospace;font-size:0.9rem;outline:none;">
+               style="width:100%;background:transparent;border:none;color:var(--text-primary);font-family:var(--font-family);font-size:0.9rem;outline:none;">
     </div>
 </div>
-<button class="btn" onclick="copyLink()">&gt; скопировать ссылку_</button>
-<a href="/" class="btn btn-secondary">&gt; создать ещё_</a>
+<button class="btn" data-text="btnCopy" onclick="copyLink()">&gt; скопировать ссылку_</button>
+<a href="/" class="btn btn-secondary" data-text="btnNew">&gt; создать ещё_</a>
 
 <script>
     function copyLink() {
-        const input = document.getElementById('secret-url');
+        var input = document.getElementById('secret-url');
         input.select();
         document.execCommand('copy');
-        const btn = event.target;
-        btn.textContent = '> ссылка скопирована!';
+        var btn = document.querySelector('[data-text="btnCopy"]');
+        var theme = localStorage.getItem('ots-theme') || 'hacker';
+        btn.textContent = themeTexts[theme].btnCopied;
         setTimeout(function() {
-            btn.textContent = '> скопировать ссылку_';
+            btn.textContent = themeTexts[theme].btnCopy;
         }, 2000);
     }
 </script>
