@@ -177,7 +177,9 @@
             if (el) el.textContent = texts.msgCreated;
 
             el = document.querySelector('[data-text="msgDecrypted"]');
-            if (el) el.textContent = texts.msgDecrypted;el = document.querySelector('[data-text="msgReady"]');
+            if (el) el.textContent = texts.msgDecrypted;
+            
+            el = document.querySelector('[data-text="msgReady"]');
             if (el) el.textContent = texts.msgReady;
 
             el = document.querySelector('[data-text="msgError"]');
@@ -231,7 +233,7 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             var urlTheme = new URLSearchParams(window.location.search).get('theme');
-            var saved = urlTheme  localStorage.getItem('ots-theme')  'hacker';
+            var saved = urlTheme || localStorage.getItem('ots-theme') ||  'hacker';
             setTheme(saved);
 
             var logo = document.getElementById('logo');
