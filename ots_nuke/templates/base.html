@@ -232,41 +232,162 @@
             }, stepTime);
         }
 
-        function initMatrix() {
+        function initCanvas() {
             var canvas = document.getElementById('matrix-canvas');
             if (!canvas) return;
             var ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+
+            var matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF';
+            var kanjiChars = '雲暁術忍影闇血鬼封印禁呪炎殺戦死魂夢幻霧刃';
             var columns = Math.floor(canvas.width / 20);
-            var drops = [];
-            var chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF';
+            var matrixDrops = [];
+            var kanjiDrops = [];
+            var particles = [];
+
             for (var i = 0; i < columns; i++) {
-                drops[i] = Math.floor(Math.random() * -canvas.height / 20);
+                matrixDrops[i] = Math.floor(Math.random() * -canvas.height / 20);
+                kanjiDrops[i] = Math.floor(Math.random() * -canvas.height / 25);
             }
+
+            function getMainBox() {
+                var el = document.querySelector('main');
+                if (!el) return { x: canvas.width / 2 - 150, y: canvas.height / 2 - 100, w: 300, h: 200 };
+                var rect = el.getBoundingClientRect();
+                return { x: rect.left, y: rect.top, w: rect.width, h: rect.height };
+            }
+
+            function createParticle(box, type) {
+                var side = Math.floor(Math.random() * 4);
+                var x, y, vx, vy;
+                if (side === 0) { x = box.x + Math.random() * box.w; y = box.y; }
+                else if (side === 1) { x = box.x + box.w; y = box.y + Math.random() * box.h; }
+                else if (side === 2) { x = box.x + Math.random() * box.w; y = box.y + box.h; }
+                else { x = box.x; y = box.y + Math.random() * box.h; }
+
+                if (type === 'sparks') {
+                    var angle = Math.random() * Math.PI * 2;
+                    var speed = 1 + Math.random() * 3;
+                    vx = Math.cos(angle) * speed;
+                    vy = Math.sin(angle) * speed;
+                } else {
+                    vx = (Math.random() - 0.5) * 1.5;
+                    vy = -(1 + Math.random() * 2);
+                }
+
+                return {
+                    x: x, y: y, vx: vx, vy: vy,
+                    life: 1.0,
+                    decay: 0.008 + Math.random() * 0.015,
+                    size: 1 + Math.random() * 2
+                };
+            }
+
+            function initParticles(count, box, type) {
+                particles = [];
+                for (var i = 0; i < count; i++) {
+                    var p = createParticle(box, type);
+                    p.life = Math.random();
+                    particles.push(p);
+                }
+            }
+
+            var lastTheme = '';
+
             function draw() {
-                ctx.fillStyle = 'rgba(10, 10, 10, 0.08)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
                 var theme = localStorage.getItem('ots-theme') || 'hacker';
-                if (theme !== 'hacker') {
+
+                if (theme !== lastTheme) {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    return;
-                }
-                ctx.fillStyle = '#33ff33';
-                ctx.font = '15px monospace';
-                for (var i = 0; i < drops.length; i++) {
-                    var text = chars[Math.floor(Math.random() * chars.length)];
-                    ctx.fillText(text, i * 20, drops[i] * 20);
-                    if (drops[i] * 20 > canvas.height && Math.random() > 0.98) {
-                        drops[i] = 0;
+                    var box = getMainBox();
+                    if (theme === 'hollow') initParticles(40, box, 'spirits');
+                    else if (theme === 'garage') initParticles(45, box, 'sparks');
+                    lastTheme = theme;
+                }if (theme === 'hacker') {
+                    ctx.fillStyle = 'rgba(10, 10, 10, 0.08)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = '#33ff33';
+                    ctx.font = '15px monospace';
+                    for (var i = 0; i < matrixDrops.length; i++) {
+                        var text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                        ctx.fillText(text, i * 20, matrixDrops[i] * 20);
+                        if (matrixDrops[i] * 20 > canvas.height && Math.random() > 0.98) {
+                            matrixDrops[i] = 0;
+                        }
+                        matrixDrops[i]++;
                     }
-                    drops[i]++;
-                }
+                } else if (theme === 'akatsuki') {
+                    ctx.fillStyle = 'rgba(13, 0, 0, 0.06)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.font = '20px serif';
+                    for (var i = 0; i < kanjiDrops.length; i++) {
+                        if (i % 3 !== 0) continue;
+                        var text = kanjiChars[Math.floor(Math.random() * kanjiChars.length)];
+                        var alpha = 0.3 + Math.random() * 0.4;
+                        ctx.fillStyle = 'rgba(255, 45, 45, ' + alpha + ')';
+                        ctx.fillText(text, i * 20, kanjiDrops[i] * 25);
+                        if (kanjiDrops[i] * 25 > canvas.height && Math.random() > 0.99) {
+                            kanjiDrops[i] = 0;
+                        }
+                        kanjiDrops[i]++;
+                    }
+                } else if (theme === 'hollow') {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    var box = getMainBox();
+                    for (var i = 0; i < particles.length; i++) {
+                        var p = particles[i];
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.life -= p.decay;
+                        if (p.life <= 0) {
+                            particles[i] = createParticle(box, 'spirits');
+                        }
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(123, 104, 238, ' + (p.life * 0.6) + ')';
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size * 2, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(123, 104, 238, ' + (p.life * 0.15) + ')';
+                        ctx.fill();
+                    }
+                } else if (theme === 'garage') {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    var box = getMainBox();
+                    for (var i = 0; i < particles.length; i++) {
+                        var p = particles[i];
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.vy += 0.03;
+                        p.life -= p.decay;
+                        if (p.life <= 0) {
+                            particles[i] = createParticle(box, 'sparks');
+                        }
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size * 0.8, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(255, 140, 0, ' + (p.life * 0.8) + ')';
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size * 1.5, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(255, 100, 0, ' + (p.life * 0.2) + ')';
+                        ctx.fill();
+                        if (p.life > 0.7) {
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, p.size * 0.4, 0, Math.PI * 2);
+                            ctx.fillStyle = 'rgba(255, 255, 200, ' + (p.life * 0.5) + ')';
+                            ctx.fill();
+                        }
+                    }
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);}
             }
+
             setInterval(draw, 80);
             window.addEventListener('resize', function() {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
+                columns = Math.floor(canvas.width / 20);
             });
         }
         document.addEventListener('DOMContentLoaded', function() {
@@ -274,7 +395,7 @@
             var saved = urlTheme || localStorage.getItem('ots-theme') ||  'hacker';
             setTheme(saved);
 
-            initMatrix();
+            initCanvas();
             var logo = document.getElementById('logo');
             if (logo) {
                 scrambleText(logo, 'OTS-NUKE', 800);
