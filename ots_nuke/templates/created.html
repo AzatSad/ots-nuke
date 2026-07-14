@@ -1,15 +1,29 @@
 {% extends "base.html" %}
 
-{% block title %}OTS-NUKE // secret created{% endblock %}
+{% block title %}OTS-NUKE // секрет создан{% endblock %}
 
 {% block content %}
-<p class="message message-success">&gt; secret created successfully_</p>
+<p class="message message-success">&gt; секрет успешно создан_</p>
 <div class="form-group">
-    <label>&gt; send this link to recipient:</label>
-    <div class="secret-link" id="secret-url">{{ secret_url }}</div>
+    <label>&gt; отправьте эту ссылку получателю:</label>
+    <div class="secret-link">
+        <input type="text" id="secret-url" value="{{ secret_url }}" readonly
+               style="width:100%;background:transparent;border:none;color:#33ff33;font-family:'Courier New',monospace;font-size:0.9rem;outline:none;">
+    </div>
 </div>
-<button class="btn" onclick="navigator.clipboard.writeText(document.getElementById('secret-url').textContent)">
-    &gt; copy link_
-</button>
-<a href="/" class="btn btn-secondary">&gt; create another_</a>
+<button class="btn" onclick="copyLink()">&gt; скопировать ссылку_</button>
+<a href="/" class="btn btn-secondary">&gt; создать ещё_</a>
+
+<script>
+    function copyLink() {
+        const input = document.getElementById('secret-url');
+        input.select();
+        document.execCommand('copy');
+        const btn = event.target;
+        btn.textContent = '> ссылка скопирована!';
+        setTimeout(function() {
+            btn.textContent = '> скопировать ссылку_';
+        }, 2000);
+    }
+</script>
 {% endblock %}

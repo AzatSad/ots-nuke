@@ -9,19 +9,51 @@
 <body>
     <div class="container">
         <header>
-            <a href="/" class="logo">OTS-NUKE</a>
-            <p class="subtitle">// one-time secret service</p>
+            <a href="/" class="logo" id="logo">OTS-NUKE</a>
+            <p class="subtitle">// сервис одноразовых секретов</p>
         </header>
 
-
         <main>
-            {%block content %}{% endblock %}
+            {% block content %}{% endblock %}
         </main>
 
-
         <footer>
-            <p>&gt; system operational_</p>
+            <p>&gt; система активна_</p>
         </footer>
     </div>
+
+    <script>
+        function scrambleText(element, finalText, duration) {
+            const chars = '▓░▒█▄▀╔╗╚╝║═@#$%&*';
+            const steps = 15;
+            const stepTime = duration / steps;
+            let step = 0;
+
+            const interval = setInterval(function() {
+                let result = '';
+                for (let i = 0; i < finalText.length; i++) {
+                    if (i < (finalText.length * step / steps)) {
+                        result += finalText[i];
+                    } else {
+                        result += chars[Math.floor(Math.random() * chars.length)];
+                    }
+                }
+                element.textContent = result;
+                step++;
+                if (step > steps) {
+                    element.textContent = finalText;
+                    clearInterval(interval);
+                }
+            }, stepTime);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const logo = document.getElementById('logo');
+            if (logo) {
+                scrambleText(logo, 'OTS-NUKE', 800);
+            }
+        });
+    </script>
+    {% block scripts %}{% endblock %}
 </body>
 </html>
