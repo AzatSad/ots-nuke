@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}OTS-NUKE // secret created{% endblock %}
+
+{% block content %}
+<p class="message message-success">&gt; secret created successfully_</p>
+<div class="form-group">
+    <label>&gt; send this link to recipient:</label>
+    <div class="secret-link" id="secret-url">{{ secret_url }}</div>
+</div>
+<button class="btn" onclick="navigator.clipboard.writeText(document.getElementById('secret-url').textContent)">
+    &gt; copy link_
+</button>
+<a href="/" class="btn btn-secondary">&gt; create another_</a>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}OTS-NUKE /// create secret{% endblock %}
+
+{% block content %}
+<form method="post" action="/">
+    <div class="form-group">
+        <label>&gt; enter secret message:</label>
+        <textarea name="secret_text" placeholder="type your secret here..." requared></textarea>
+    </div>
+    <button type="submit" class="btn">&gt; encrypt &amp; create link_</button>
+</form>
+<p class="warning">&gt; secret will be destroyed after first read!</p>
+{% endblock %}
